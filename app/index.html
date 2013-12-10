@@ -56,6 +56,11 @@
                     <h4>Modernizr</h4>
                     <p>Modernizr is an open-source JavaScript library that helps you build the next generation of HTML5 and CSS3-powered websites.</p>
 
+                    <h4>Dane z bazy</h4>
+                    <p id="dane-z-bazy">
+                    	Loading...
+                    </p>
+
                 </div>
             </div>
 
@@ -69,6 +74,7 @@
         <!-- build:js scripts/vendor.js -->
         <!-- bower:js -->
         <script src="bower_components/jquery/jquery.js"></script>
+        <script src="bower_components/firebase/firebase.js"></script>
         <!-- endbower -->
         <!-- endbuild -->
 
@@ -82,12 +88,8 @@
             ga('create','UA-XXXXX-X');ga('send','pageview');
         </script>
 
-        <!-- build:js scripts/main.js -->
-        <script src="scripts/main.js"></script>
-        <!-- endbuild -->
-
         <!-- build:js(.tmp) scripts/coffee.js -->
-        <script src="scripts/hello.js"></script>
+    	<script src="scripts/main.js"></script>
         <!-- endbuild -->
 
         <!-- build:js scripts/plugins.js -->
