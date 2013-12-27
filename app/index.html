@@ -16,6 +16,8 @@
 		<!-- build:js scripts/vendor/modernizr.js -->
 		<script src="bower_components/modernizr/modernizr.js"></script>
 		<!-- endbuild -->
+
+		<link rel="stylesheet" href="bower_components/bootswatch/cosmo/bootstrap.css">
 	</head>
 	<body>
 		<!--[if lt IE 10]>
@@ -29,57 +31,26 @@
 				<ul class="nav nav-pills pull-right">
 					<li class="active"><a href="#">Główna</a></li>
 					<li><a style="cursor: pointer" data-toggle="modal" data-target="#contactModal">Kontakt</a></li>
+					<li><a href='admin.html' class='admin' style="display: none">Panel administracyjny</a></li>
 					<li><a href='#' class='logout' style="display: none">Wyloguj</a></li>
 				</ul>
-				<h3 class="text-muted">Accelo Test</h3>
+				<h3 class="text-muted"><span id="text_title"></span>&nbsp;</h3>
 			</div>
 
 			<div id="alert_placeholder"></div>
 
 			<div class="jumbotron">
-				<h1 id="text_jumbo_title"></h1>
-				<p class="lead" id="text_jumbo_subtitle"></p>
 				<span id="text_jumbo_text"></span>
 			</div>
 
 			<div class="row marketing">
-				<div class="col-lg-12">
-					<h1>O co chodzi?</h1>
-					<p>Test ten ma za zadanie pomóc wykazać na ile wydajne i dokładne są akcelerometry wbudowane w różne telefony z systemem Android. Jeżeli posiadasz taki telefon to koniecznie uruchom test i zobacz jak wypada on na tle innych!</p>
-					<p>
-						<a href="https://play.google.com/store/apps/details?id=test.test.test">
-							<img alt="Android app on Google Play" src="https://developer.android.com/images/brand/en_app_rgb_wo_60.png" />
-						</a>
-					</p>
-
-					<h1>Wyniki testów</h1>
-					<p>
-						Do tej pory zebrano <span id="tests-count"></span> pomiarów z <span id="tests-count-distinct"></span> różnych modeli telefonów. Notowano częstotliwość pomiaru na poziomie <span id="total-frequency"></span>, natomiast najmniejsze niezerowe pomiary były na poziomie <span id="total-accuracy"></span>.
-					</p>
-
-					<h1>Wyniki ze względu na producenta</h1>
-					<h4>Częstotliwość odczytu wartości z akcelerometru</h4>
-					<div id="chart-producent-frequency"></div>
-					<div id="table-producent-frequency"></div>
-					<hr />
-					<h4>Minimalna, niezerowa zarejestrowana zmiana wartości przyspieszenia</h4>
-					<div id="chart-producent-accuracy"></div>
-					<div id="table-producent-accuracy"></div>
-
-					<h1>Wyniki ze względu na wersję Androida</h1>
-					<h4>Częstotliwość odczytu wartości z akcelerometru</p>
-					<div id="chart-version-frequency"></div>
-					<div id="table-version-frequency"></div>
-					<hr />
-					<h4>Minimalna, niezerowa zarejestrowana zmiana wartości przyspieszenia</h4>
-					<div id="chart-version-accuracy"></div>
-					<div id="table-version-accuracy"></div>
+				<div class="col-lg-12" id="text_main_text">
 				</div>
 			</div>
 
 			<div class="footer">
 				<div class="pull-left">
-					<p>&copy; 2013 <a href="http://www.sklodowski.info">Marek Skłodowski</a></p>
+					<p id="text_footer_text"></p>
 				</div>
 				<div class="pull-right">
 					<span id="auth-footer-text"></span><a href='#' class='logout'>Wyloguj</a>
@@ -94,10 +65,7 @@
 							<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
 							<h4 class="modal-title" id="myModalLabel">Kontakt</h4>
 						</div>
-					<div class="modal-body">
-						<p>Projekt stworzony przez Marka Skłodowskiego na Politechnice Poznańskiej.</p>
-						<p><a href="http://www.sklodowski.info/">sklodowski.info</a></p>
-					</div>
+					<div id="text_contact_text" class="modal-body"></div>
 				<div class="modal-footer">
 					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
 				</div>
@@ -126,8 +94,12 @@
 			ga('create','UA-XXXXX-X');ga('send','pageview');
 		</script>
 
-		<!-- build:js(.tmp) scripts/coffee.js -->
+		<!-- build:js(.tmp) scripts/main.coffee -->
 		<script src="scripts/main.js"></script>
+		<!-- endbuild -->
+
+		<!-- build:js(.tmp) scripts/charts.coffee -->
+		<script src="scripts/charts.js"></script>
 		<!-- endbuild -->
 
 		<!-- build:js scripts/plugins.js -->

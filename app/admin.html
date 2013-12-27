@@ -16,6 +16,7 @@
 		<!-- build:js scripts/vendor/modernizr.js -->
 		<script src="bower_components/modernizr/modernizr.js"></script>
 		<!-- endbuild -->
+		<link rel="stylesheet" href="bower_components/bootswatch/cosmo/bootstrap.css">
 	</head>
 	<body>
 		<!--[if lt IE 10]>
@@ -34,21 +35,47 @@
 			<a href="index.html">Wróć do strony głównej</a> lub
 			<a href="#" class="logout">Wyloguj się</a>
 
-			<h3>Treść</h3>
+			<h3>Tytuł</h3>
 			<p>
-				<form id="edit_text_jumbo_title" class="form-inline" role="form">
+				<form id="edit_text_title" class="form-inline" role="form">
 					<div placeholder="Tytuł" class="form-group"><input type="text" class="form-control"></div>
-					<button type="submit" class="btn btn-default">Zapisz</button>
-				</form>
-
-				<br />
-
-				<form id="edit_text_jumbo_subtitle" class="form-inline" role="form">
-					<div placeholder="Podtytuł" class="form-group"><input type="text" class="form-control"></div>
-					<button type="submit" class="btn btn-default">Zapisz</button>
+					<button type="submit" class="edit-text-btn btn btn-default">Zapisz</button>
 				</form>
 			</p>
 
+			<h3>Nagłówek</h3>
+			<p>
+				<form id="edit_text_jumbo_text" role="form">
+					<textarea name="mce_jumbo_text" style="width:100%; height:300px"></textarea>
+					<button type="submit" class="edit-text-btn btn btn-default">Zapisz</button>
+				</form>
+			</p>
+
+			<h3>Treść</h3>
+			<p>
+				Możesz wstawić element, do którego będziesz mógł się odwołać z poziomu kodu Javascript:<br />
+				[[id-elementu-blokowego]], {{id-elementu-inline}}
+				<form id="edit_text_main_text" role="form">
+					<textarea name="mce_main_text" style="width:100%; height:800px"></textarea>
+					<button type="submit" class="edit-text-btn btn btn-default">Zapisz</button>
+				</form>
+			</p>
+
+			<h3>Stopka</h3>
+			<p>
+				<form id="edit_text_footer_text" role="form">
+					<textarea name="mce_footer_text" style="width:100%; height:100px"></textarea>
+					<button type="submit" class="edit-text-btn btn btn-default">Zapisz</button>
+				</form>
+			</p>
+
+			<h3>Kontakt</h3>
+			<p>
+				<form id="edit_text_contact_text" role="form">
+					<textarea name="mce_contact_text" style="width:100%; height:200px"></textarea>
+					<button type="submit" class="edit-text-btn btn btn-default">Zapisz</button>
+				</form>
+			</p>
 		</div>
 
 
@@ -62,6 +89,7 @@
 
 		<script type='text/javascript' src='https://cdn.firebase.com/v0/firebase-simple-login.js'></script>
 		<script type="text/javascript" src="https://www.google.com/jsapi"></script>
+		<script src="http://tinymce.cachefly.net/4.0/tinymce.min.js"></script>
 
 		<!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->
 		<script>
