@@ -24,20 +24,22 @@
 
 
 		<div class="container">
+
 			<div class="header">
 				<ul class="nav nav-pills pull-right">
 					<li class="active"><a href="#">Główna</a></li>
 					<li><a style="cursor: pointer" data-toggle="modal" data-target="#contactModal">Kontakt</a></li>
+					<li><a href='#' class='logout' style="display: none">Wyloguj</a></li>
 				</ul>
 				<h3 class="text-muted">Accelo Test</h3>
 			</div>
 
+			<div id="alert_placeholder"></div>
+
 			<div class="jumbotron">
-				<h1>Testy akcelerometrów</h1>
-				<p class="lead">Telefonów z systemem Android.</p>
-				<img src="images/accelerometer.png" />
-				<img src="images/axes.png" />
-				<img src="images/android.png" />
+				<h1 id="text_jumbo_title"></h1>
+				<p class="lead" id="text_jumbo_subtitle"></p>
+				<span id="text_jumbo_text"></span>
 			</div>
 
 			<div class="row marketing">
@@ -76,7 +78,12 @@
 			</div>
 
 			<div class="footer">
-				<p>2013 <a href="http://www.sklodowski.info">Marek Skłodowski</a></p>
+				<div class="pull-left">
+					<p>&copy; 2013 <a href="http://www.sklodowski.info">Marek Skłodowski</a></p>
+				</div>
+				<div class="pull-right">
+					<span id="auth-footer-text"></span><a href='#' class='logout'>Wyloguj</a>
+				</div>
 			</div>
 
 			<!-- Modal -->
@@ -106,6 +113,7 @@
 		<!-- endbower -->
 		<!-- endbuild -->
 
+		<script type='text/javascript' src='https://cdn.firebase.com/v0/firebase-simple-login.js'></script>
 		<script type="text/javascript" src="https://www.google.com/jsapi"></script>
 
 		<!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->
