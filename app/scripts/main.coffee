@@ -19,11 +19,11 @@ $(document).ready ->
 			setTimeout( =>
 				waitFor--
 				if waitFor <= 0
-					redraw()
+					redraw(data, newData)
 			, 1000)
 	)
 
-	redraw = ->
+	redraw = (data, newData) ->
 		# {Nokia3310: [..., ...], SamsungGalaxy: [..., ...], ...}
 		distinctData = {}
 		_.each data, (el) ->
@@ -127,8 +127,6 @@ $(document).ready ->
 		_.each versionData, (dataTable, key) ->
 			resultsVersion[key] = getAggregates(dataTable)
 
-		console.log resultsWhole, resultsProducent, resultsVersion
-
 		$("#tests-count").html(data.length)
 		$("#tests-count-distinct").html(Object.keys(distinctData).length)
 
@@ -190,7 +188,7 @@ $(document).ready ->
 		chart.draw(chartData)
 
 		# Version-frequency chart
-		chartDataRaw = [["Wersja", "Częstotliwość"]]
+		chartDataRaw = [["Wersja Androida", "Częstotliwość"]]
 		_.each resultsVersion, (val, key) =>
 			chartDataRaw.push [key, +val.freqAvg.toPrecision(4)]
 		
@@ -198,7 +196,7 @@ $(document).ready ->
 		chartOptions =
 			legend: "none"
 			hAxis:
-				title: "Wersja"
+				title: "Wersja Androida"
 			vAxis:
 				title: "Częstotliwość [Hz]"
 
