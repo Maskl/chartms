@@ -16,7 +16,7 @@
 		<!-- build:js scripts/vendor/modernizr.js -->
 		<script src="bower_components/modernizr/modernizr.js"></script>
 		<!-- endbuild -->
-
+		<link rel="stylesheet" href="bower_components/sass-bootstrap/examples/signin/signin.css">
 		<link rel="stylesheet" href="bower_components/bootswatch/cosmo/bootstrap.css">
 	</head>
 	<body>
@@ -27,49 +27,20 @@
 
 		<div class="container">
 
-			<div class="header">
-				<ul class="nav nav-pills pull-right">
-					<li class="active"><a href="#">Główna</a></li>
-					<li><a style="cursor: pointer" data-toggle="modal" data-target="#contactModal">Kontakt</a></li>
-					<li><a href='admin.html' class='admin' style="display: none">Panel administracyjny</a></li>
-					<li><a href='#' class='logout' style="display: none">Wyloguj</a></li>
-				</ul>
-				<h3 class="text-muted"><span id="text_title"></span>&nbsp;</h3>
-			</div>
-
 			<div id="alert_placeholder"></div>
 
-			<div class="jumbotron">
-				<span id="text_jumbo_text"></span>
-			</div>
+			<form class="form-signin" role="form">
+				<h2 class="form-signin-heading">Zaloguj się</h2>
+				<input type="text" class="form-control sign-in-email" placeholder="E-mail" required autofocus>
+				<input type="password" class="form-control sign-in-password" placeholder="Hasło" required>
+				<label class="checkbox">
+					<input type="checkbox" value="remember-me" class="sign-in-remember"> Zapamiętaj mnie
+				</label>
+				<button class="btn btn-lg btn-primary btn-block sign-in-btn" type="submit">Zaloguj</button>
+				<br />
+				<a href="index.html">Wróć do strony głównej</a>
+			</form>
 
-			<div class="row marketing">
-				<div class="col-lg-12" id="text_main_text">
-				</div>
-			</div>
-
-			<div class="footer">
-				<div class="pull-left">
-					<p id="text_footer_text"></p>
-				</div>
-				<div class="pull-right">
-					<span id="auth-footer-text"></span><a href='#' class='logout'>Wyloguj</a>
-				</div>
-			</div>
-
-			<!-- Modal -->
-			<div class="modal fade" id="contactModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-				<div class="modal-dialog">
-					<div class="modal-content">
-						<div class="modal-header">
-							<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-							<h4 class="modal-title" id="myModalLabel">Kontakt</h4>
-						</div>
-					<div id="text_contact_text" class="modal-body"></div>
-				<div class="modal-footer">
-					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-				</div>
-			</div>
 		</div>
 
 
@@ -94,12 +65,8 @@
 			ga('create','UA-XXXXX-X');ga('send','pageview');
 		</script>
 
-		<!-- build:js(.tmp) scripts/main.coffee -->
+		<!-- build:js(.tmp) scripts/coffee.js -->
 		<script src="scripts/main.js"></script>
-		<!-- endbuild -->
-
-		<!-- build:js(.tmp) scripts/charts.coffee -->
-		<script src="scripts/charts.js"></script>
 		<!-- endbuild -->
 
 		<!-- build:js scripts/plugins.js -->
