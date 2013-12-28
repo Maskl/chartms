@@ -1,7 +1,36 @@
+window.firebaseBase = 'https://chartms.firebaseio.com'
+window.firebaseTexts = 'https://chartms.firebaseio.com/texts'
+window.firebaseData = 'https://chartms.firebaseio.com/accelotests'
+
+window.translations =
+	"main": "Główna"
+	"contact": "Kontakt"
+	"admin-panel": "Panel admina"
+	"logout": "Wyloguj"
+	"close": "Zamknij"
+	"login": "Zaloguj się"
+	"remember-me": "Zapamiętaj mnie"
+	"login-button": "Zaloguj"
+	"back-to-main": "Wróć do strony głównej"
+	"save": "Zapisz"
+	"id-elements-info": "Możesz wstawić element, do którego będziesz mógł się odwołać z poziomu kodu Javascript:<br />[[id-elementu-blokowego]], {{id-elementu-inline}}"
+	"title": "Tytuł"
+	"header": "Nagłówek"
+	"text": "Treść"
+	"footer": "Stopka"
+	"logoutSuccess": "Pomyślnie wylogowałeś się."
+	"incorectLogin": "Podałeś niepoprawne dane logowania"
+	"loggedInFooterLinksStart": "Zalogowany jako "
+	"loggedInFooterLinksEnd": ", <a href='admin.html'>Panel administracyjny</a>, "
+	"loggedOutFooterLinks": "<a href='login.html'>Panel administracyjny</a>"
+	"saving": "Zapisywanie..."
+
 capitaliseFirstLetter = (string) ->
 	string.charAt(0).toUpperCase() + string.slice(1)
 
-window.redrawCharts = (data, snapshot) ->
+window.appOnStart = () ->
+
+window.appOnDataLoaded = (data, snapshot) ->
 
 	# {Nokia3310: [..., ...], SamsungGalaxy: [..., ...], ...}
 	distinctData = {}
@@ -106,7 +135,7 @@ window.redrawCharts = (data, snapshot) ->
 	_.each versionData, (dataTable, key) ->
 		resultsVersion[key] = getAggregates(dataTable)
 
-	$("#tests-count").html(data.length)
+	$("#tests-count").html(Object.keys(data).length)
 	$("#tests-count-distinct").html(Object.keys(distinctData).length)
 
 	$("#total-frequency").html(resultsWhole.freqAvg.toPrecision(2) + "±" + resultsWhole.freqDev.toPrecision(2) + 

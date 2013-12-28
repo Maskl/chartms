@@ -12,12 +12,12 @@
 		<!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
 		<!-- build:css(.tmp) styles/main.css -->
 		<link rel="stylesheet" href="styles/main.css">
+		<link rel="stylesheet" href="styles/bootstrap.css">
+		<link rel="stylesheet" href="styles/signin.css">
 		<!-- endbuild -->
 		<!-- build:js scripts/vendor/modernizr.js -->
 		<script src="bower_components/modernizr/modernizr.js"></script>
 		<!-- endbuild -->
-		<link rel="stylesheet" href="bower_components/sass-bootstrap/examples/signin/signin.css">
-		<link rel="stylesheet" href="bower_components/bootswatch/cosmo/bootstrap.css">
 	</head>
 	<body>
 		<!--[if lt IE 10]>
@@ -30,15 +30,15 @@
 			<div id="alert_placeholder"></div>
 
 			<form class="form-signin" role="form">
-				<h2 class="form-signin-heading">Zaloguj się</h2>
-				<input type="text" class="form-control sign-in-email" placeholder="E-mail" required autofocus>
-				<input type="password" class="form-control sign-in-password" placeholder="Hasło" required>
+				<h2 class="form-signin-heading translate-login">Login</h2>
+				<input type="text" class="form-control sign-in-email " placeholder="E-mail" required autofocus>
+				<input type="password" class="form-control sign-in-password" placeholder="Password" required>
 				<label class="checkbox">
-					<input type="checkbox" value="remember-me" class="sign-in-remember"> Zapamiętaj mnie
+					<input type="checkbox" value="remember-me" class="sign-in-remember"><span class="translate-remember-me">Remember me</span>
 				</label>
-				<button class="btn btn-lg btn-primary btn-block sign-in-btn" type="submit">Zaloguj</button>
+				<button class="btn btn-lg btn-primary btn-block sign-in-btn translate-login-button" type="submit">Login</button>
 				<br />
-				<a href="index.html">Wróć do strony głównej</a>
+				<a href="index.html" class="translate-back-to-main">Back to main page</a>
 			</form>
 
 		</div>
@@ -65,8 +65,12 @@
 			ga('create','UA-XXXXX-X');ga('send','pageview');
 		</script>
 
-		<!-- build:js(.tmp) scripts/coffee.js -->
-		<script src="scripts/main.js"></script>
+		<!-- build:js(.tmp) scripts/app.js -->
+		<script src="scripts/app.js"></script>
+		<!-- endbuild -->
+
+		<!-- build:js(.tmp) scripts/chartms.js -->
+		<script src="scripts/chartms.js"></script>
 		<!-- endbuild -->
 
 		<!-- build:js scripts/plugins.js -->

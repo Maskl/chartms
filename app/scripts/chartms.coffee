@@ -1,3 +1,5 @@
+window.translates = window.translates or {}
+
 google.load("visualization", "1",
 	packages: ["corechart", "table"]
 )
@@ -28,7 +30,7 @@ $(document).ready ->
 	$(".logout").on "click", ->
 		window.auth.logout()
 		window.location = "index.html"
-		showSuccess("Pomyślnie wylogowałeś się.")
+		showSuccess(window.translates.logoutSuccess or "Successfully logout")
 
 	$(".sign-in-btn").on "click", ->
 		email = $(".sign-in-email").val()
@@ -49,22 +51,22 @@ $(document).ready ->
 startApp = ->
 	window.waitingForLogin = false
 
-	dataRef = new Firebase('https://chartms.firebaseio.com')
+	dataRef = new Firebase(window.firebaseBase)
 	window.auth = new FirebaseSimpleLogin dataRef, (error, user) ->
 		if error
-			showError("Podałeś niepoprawne dane logowania")
+			showError(window.translates.incorectLogin or "Incorect login data")
 			console.log "Login error!", error
 		else if user
-			$("#auth-footer-text").html("Zalogowany jako " + user.email + ", <a href='admin.html'>Panel administracyjny</a>, ")
+			$("#auth-footer-text").html((window.translates.loggedInFooterLinksStart or "Logged in as") + user.email + (window.translates.loggedInFooterLinksEnd or ", <a href='admin.html'>Admin panel</a>, "))
 			$(".logout, .admin").show()
 			if window.waitingForLogin
 				window.waitingForLogin = false
 				window.location = "admin.html"
-				success("Pomyślnie zalogowałeś się.")
 		else
-			console.log "user is logged out"
-			$("#auth-footer-text").html("<a href='login.html'>Panel administracyjny</a>")
+			$("#auth-footer-text").html(window.translates.loggedOutFooterLinks or "<a href='login.html'>Admin panel</a>")
 			$(".logout, .admin").hide()
+			if window.location.pathname.indexOf("admin.html") != -1
+				window.location = "login.html"
 
 	if window.location.pathname.indexOf("index.html") != -1
 		startMainPage()
@@ -73,7 +75,7 @@ startApp = ->
 		startAdminPage()
 
 startAdminPage = ->
-	loadData 'https://chartms.firebaseio.com/texts', (data, snapshot, dataRef) ->
+	loadData window.firebaseTexts, (data, snapshot, dataRef) ->
 		redrawTextsAdmin(data, snapshot, dataRef)
 
 redrawTextsAdmin = (data, snapshot, dataRef) ->
@@ -88,9 +90,9 @@ redrawTextsAdmin = (data, snapshot, dataRef) ->
 		if !val
 			val = tinyMCE.get("mce_" + key).getContent()
 
-		$(e.target).text("Zapisywanie...")
+		$(e.target).text(window.translates.saving or "Saving...")
 		dataRef.child(key).set(val, =>
-			$(e.target).text("Zapisz")
+			$(e.target).text(window.translates.save or "Save")
 		)
 		return false
 
@@ -104,13 +106,20 @@ redrawTextsAdmin = (data, snapshot, dataRef) ->
 		toolbar: "insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image"
 
 startMainPage = ->
-	loadData 'https://chartms.firebaseio.com/texts', (data, snapshot) ->
+	parseTranslations()
+	window.appOnStart()
+	loadData window.firebaseTexts, (data, snapshot) ->
 		redrawTexts(data, snapshot)
-		loadData 'https://chartms.firebaseio.com/accelotests', (data, snapshot) ->
-			window.redrawCharts(data, snapshot)
+		loadData window.firebaseData, (data, snapshot) ->
+			window.appOnDataLoaded(data, snapshot)
 
 redrawTexts = (data, snapshot) ->
 	for key, val of data
-		val = val.replace(/{{(.*)}}/g, '<span id="$1"></span>')
-		val = val.replace(/\[\[(.*)\]\]/g, '<div id="$1"></div>')
+		val = val.replace(/{{(.*?)}}/g, '<span id="$1"></span>')
+		val = val.replace(/\[\[(.*?)\]\]/g, '<div id="$1"></div>')
 		$("#text_" + key).html(val)
+
+parseTranslations = ->
+	for key, val of window.translations
+		window.translates[key] = val
+		$(".translate-#{key}").html(val)
