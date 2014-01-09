@@ -1,6 +1,6 @@
 window.firebaseBase = 'https://chartms.firebaseio.com'
 window.firebaseTexts = 'https://chartms.firebaseio.com/texts'
-window.firebaseData = 'https://chartms.firebaseio.com/accelotests'
+window.firebaseData = 'https://chartms.firebaseio.com/autotests'
 
 window.translations =
 	"main": "Główna"
@@ -277,4 +277,100 @@ window.appOnDataLoaded = (data, snapshot) ->
 	if highlightRow >= 0
 		chart.setSelection([{row: highlightRow, column: null}])
 
-	window.aaa = chart
+	# AUTOTEST!!!
+	$("body").append("<div id='xxx-table'></div>")
+	$("body").append("<div id='xxx-chart-t'></div>")
+	$("body").append("<div id='xxx-chart-x'></div>")
+	$("body").append("<div id='xxx-chart-y'></div>")
+	$("body").append("<div id='xxx-chart-z'></div>")
+	$("body").append("<div id='xxx-chart-rx'></div>")
+	$("body").append("<div id='xxx-chart-ry'></div>")
+	$("body").append("<div id='xxx-chart-rz'></div>")
+
+	highlightRow = -1
+	urlParamsStr = ""
+	if document.URL.indexOf('?') >= 0
+		urlParamsStr = document.URL.substring(document.URL.indexOf('?') + 1)
+
+	chartDataRaw = [["model", "producent", "ver", "date", "dpMin", "dpMax", "dpAvg", "dpDev", "dtMin", "dtMax", "dtAvg", "dtDev"]]
+	
+	dataToCharts = []
+	for key, val of data
+		dataToCharts.push val
+		chartDataRaw.push [
+			val.phoneModel
+			val.phoneManufacturer
+			val.phoneVersionRelease
+			val.date
+			(+val.dpMin).toPrecision(2)
+			(+val.dpMax).toPrecision(2)
+			(+val.dpAvg).toPrecision(2)
+			(+val.dpDev).toPrecision(2)
+			(+val.dtMin).toPrecision(2)
+			(+val.dtMax).toPrecision(2)
+			(+val.dtAvg).toPrecision(2)
+			(+val.dtDev).toPrecision(2)
+		]
+		
+	chartData = google.visualization.arrayToDataTable(chartDataRaw)
+
+	chart = new google.visualization.Table(document.getElementById("xxx-table"))
+	chart.draw(chartData)
+
+	google.visualization.events.addListener chart, 'select', (e) ->
+		data = dataToCharts[chart.getSelection()[0].row]
+
+		chartDataRawX = [["t", "x"]]
+		chartDataRawY = [["t", "y"]]
+		chartDataRawZ = [["t", "z"]]
+		chartDataRawXX = [["t", "x"]]
+		chartDataRawYY = [["t", "y"]]
+		chartDataRawZZ = [["t", "z"]]
+
+		startT = +data.autotest_t[0]
+		lastT = -1
+		for i in [0..data.autotest_t.length]
+			if lastT == +data.autotest_t[i]
+				continue
+			lastT = +data.autotest_t[i]
+			chartDataRawX.push [(lastT - startT) / 1000000000, +data.autotest_x[i]]
+			chartDataRawY.push [(lastT - startT) / 1000000000, +data.autotest_y[i]]
+			chartDataRawZ.push [(lastT - startT) / 1000000000, +data.autotest_z[i]]
+			chartDataRawXX.push [(lastT - startT) / 1000000000, +data.autotest_raw_x[i]]
+			chartDataRawYY.push [(lastT - startT) / 1000000000, +data.autotest_raw_y[i]]
+			chartDataRawZZ.push [(lastT - startT) / 1000000000, +data.autotest_raw_z[i]]
+
+		chartDataX = google.visualization.arrayToDataTable(chartDataRawX)
+		chartDataY = google.visualization.arrayToDataTable(chartDataRawY)
+		chartDataZ = google.visualization.arrayToDataTable(chartDataRawZ)
+		chartDataXX = google.visualization.arrayToDataTable(chartDataRawXX)
+		chartDataYY = google.visualization.arrayToDataTable(chartDataRawYY)
+		chartDataZZ = google.visualization.arrayToDataTable(chartDataRawZZ)
+
+		chartX = new google.visualization.LineChart(document.getElementById("xxx-chart-x"))
+		chartY = new google.visualization.LineChart(document.getElementById("xxx-chart-y"))
+		chartZ = new google.visualization.LineChart(document.getElementById("xxx-chart-z"))
+		chartXX = new google.visualization.LineChart(document.getElementById("xxx-chart-rx"))
+		chartYY = new google.visualization.LineChart(document.getElementById("xxx-chart-ry"))
+		chartZZ = new google.visualization.LineChart(document.getElementById("xxx-chart-rz"))
+
+		chartOptions =
+			legend: "none"
+			title: ""
+			hAxis:
+				title: "t [s]"
+			vAxis:
+				title: "a [m/s2]"
+
+		chartOptions.title = "Przyspieszenie: oś X"
+		chartX.draw(chartDataX, chartOptions)
+		chartOptions.title = "Przyspieszenie: oś Y"
+		chartY.draw(chartDataY, chartOptions)
+		chartOptions.title = "Przyspieszenie: oś Z"
+		chartZ.draw(chartDataZ, chartOptions)
+		chartOptions.title = "Przyspieszenie bez grawitacji: oś X"
+		chartXX.draw(chartDataXX, chartOptions)
+		chartOptions.title = "Przyspieszenie bez grawitacji: oś Y"
+		chartYY.draw(chartDataYY, chartOptions)
+		chartOptions.title = "Przyspieszenie bez grawitacji: oś Z"
+		chartZZ.draw(chartDataZZ, chartOptions)
