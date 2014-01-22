@@ -73,10 +73,10 @@ window.appOnDataLoaded = (data, snapshot) ->
 			dpMax: dpMax
 			dpAvg: dpAvgSum / phoneTestsCount
 			dpDev: dpDevSum / phoneTestsCount
-			freqMin: 1000 / dtMax
-			freqMax: 1000 / dtMin
-			freqAvg: (1000 / (dtAvg - dtDev) + 1000 / (dtAvg + dtDev)) / 2
-			freqDev: 1000 / (dtAvg - dtDev) - (1000 / (dtAvg - dtDev) + 1000 / (dtAvg + dtDev)) / 2
+			freqMin: dtMin  # 1000 / dtMax
+			freqMax: dtMax # 1000 / dtMin
+			freqAvg: dtAvg # (1000 / (dtAvg - dtDev) + 1000 / (dtAvg + dtDev)) / 2
+			freqDev: dtDev #1000 / (dtAvg - dtDev) - (1000 / (dtAvg - dtDev) + 1000 / (dtAvg + dtDev)) / 2
 			phoneTestsCount: phoneTestsCount
 
 		preparedData.push phoneData
@@ -278,6 +278,8 @@ window.appOnDataLoaded = (data, snapshot) ->
 		chart.setSelection([{row: highlightRow, column: null}])
 
 	# AUTOTEST!!!
+	$("body").append("<input type='text' id='time-from' value='10' /><input type='text' id='time-to' value='50' />")
+
 	$("body").append("<div id='xxx-table'></div>")
 	$("body").append("<div id='xxx-chart-t'></div>")
 	$("body").append("<div id='xxx-chart-x'></div>")
@@ -327,18 +329,30 @@ window.appOnDataLoaded = (data, snapshot) ->
 		chartDataRawYY = [["t", "y"]]
 		chartDataRawZZ = [["t", "z"]]
 
+		userMinT = +$("#time-from").val()
+		userMaxT = +$("#time-to").val()
+
 		startT = +data.autotest_t[0]
 		lastT = -1
 		for i in [0..data.autotest_t.length]
 			if lastT == +data.autotest_t[i]
 				continue
+
 			lastT = +data.autotest_t[i]
-			chartDataRawX.push [(lastT - startT) / 1000000000, +data.autotest_x[i]]
-			chartDataRawY.push [(lastT - startT) / 1000000000, +data.autotest_y[i]]
-			chartDataRawZ.push [(lastT - startT) / 1000000000, +data.autotest_z[i]]
-			chartDataRawXX.push [(lastT - startT) / 1000000000, +data.autotest_raw_x[i]]
-			chartDataRawYY.push [(lastT - startT) / 1000000000, +data.autotest_raw_y[i]]
-			chartDataRawZZ.push [(lastT - startT) / 1000000000, +data.autotest_raw_z[i]]
+			currT = (lastT - startT) / 1000000000
+
+			if currT < userMinT
+				continue
+
+			if currT > userMaxT
+				break
+
+			chartDataRawXX.push [currT, +data.autotest_x[i]]
+			chartDataRawYY.push [currT, +data.autotest_y[i]]
+			chartDataRawZZ.push [currT, +data.autotest_z[i]]
+			chartDataRawX.push [currT, +data.autotest_raw_x[i]]
+			chartDataRawY.push [currT, +data.autotest_raw_y[i]]
+			chartDataRawZ.push [currT, +data.autotest_raw_z[i]]
 
 		chartDataX = google.visualization.arrayToDataTable(chartDataRawX)
 		chartDataY = google.visualization.arrayToDataTable(chartDataRawY)
