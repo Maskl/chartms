@@ -73,10 +73,10 @@ window.appOnDataLoaded = (data, snapshot) ->
 			dpMax: dpMax
 			dpAvg: dpAvgSum / phoneTestsCount
 			dpDev: dpDevSum / phoneTestsCount
-			freqMin: 1000 / dtMax
-			freqMax: 1000 / dtMin
-			freqAvg: (1000 / (dtAvg - dtDev) + 1000 / (dtAvg + dtDev)) / 2
-			freqDev: 1000 / (dtAvg - dtDev) - (1000 / (dtAvg - dtDev) + 1000 / (dtAvg + dtDev)) / 2
+			freqMin: dtMin  # 1000 / dtMax
+			freqMax: dtMax # 1000 / dtMin
+			freqAvg: dtAvg # (1000 / (dtAvg - dtDev) + 1000 / (dtAvg + dtDev)) / 2
+			freqDev: dtDev #1000 / (dtAvg - dtDev) - (1000 / (dtAvg - dtDev) + 1000 / (dtAvg + dtDev)) / 2
 			phoneTestsCount: phoneTestsCount
 
 		preparedData.push phoneData
